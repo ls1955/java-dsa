@@ -1,4 +1,5 @@
 import java.lang.*;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
@@ -25,15 +26,14 @@ public class RSA {
             throw new IllegalArgumentException("plaintext length should be bigger or equal 20. got: " + plaintext.length());
         }
 
-        // TODO: Rename variable
-        BigInteger num = new BigInteger(plaintext.getBytes());
-        BigInteger ciphertext = encrypt(num);
+        BigInteger message = new BigInteger(plaintext.getBytes());
+        BigInteger ciphertext = encrypt(message);
         return String.valueOf(ciphertext);
     }
 
-    // Returns an encrypted number from *num*.
-    public BigInteger encrypt(BigInteger num) {
-        return num.modPow(e, n);
+    // Returns an encrypted number from *message*.
+    public BigInteger encrypt(BigInteger message) {
+        return message.modPow(e, n);
     }
 
     public String getPlaintext(String ciphertext) {
@@ -41,14 +41,25 @@ public class RSA {
             throw new IllegalArgumentException("could not work with empty ciphertext");
         }
 
-        // TODO: Rename variable
-        BigInteger num = new BigInteger(ciphertext.getBytes());
-        BigInteger plaintext = decrypt(num);
-        return String.valueOf(ciphertext);
+        BigInteger message = new BigInteger(ciphertext);
+        BigInteger decryptedMessage = decrypt(message);
+
+        return new String(decryptedMessage.toByteArray());
     }
 
-    // Returns a decrypted number from *num*.
-    public BigInteger decrypt(BigInteger num) {
-        return num.modPow(this.d, this.n);
+    // Returns a decrypted number from *message*.
+    public BigInteger decrypt(BigInteger message) {
+        return message.modPow(d, n);
+    }
+
+    public static void main(String[] args) {
+        RSA rsa = new RSA();
+        String plaintext = "tuna vanilla Ham Yam Bam";
+        String ciphertext = rsa.getCiphertext(plaintext);
+        String decryptedText = rsa.getPlaintext(ciphertext);
+
+        System.out.println("plaintext: " + plaintext);
+        System.out.println("ciphertext: " + ciphertext);
+        System.out.println("decrypted text: " + decryptedText);
     }
 }
