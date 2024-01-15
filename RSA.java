@@ -9,8 +9,8 @@ public class RSA {
 
     public RSA() {
         r = new SecureRandom();
-        p = new BigInteger(bitlength / 2, 100, new SecureRandom());
-        q = new BigInteger(bitlength / 2, 100, new SecureRandom());
+        p = new BigInteger(bitLength / 2, 100, new SecureRandom());
+        q = new BigInteger(bitLength / 2, 100, new SecureRandom());
         n = p.multiply(q);
         lambda = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
         e = BigInteger.valueOf(65537);
@@ -33,7 +33,7 @@ public class RSA {
 
     // Returns an encrypted number from *num*.
     public BigInteger encrypt(BigInteger num) {
-        return num.modPow(this.e, this.n);
+        return num.modPow(e, n);
     }
 
     public String getPlaintext(String ciphertext) {
