@@ -22,10 +22,6 @@ public class RSA {
     }
 
     public String getCiphertext(String plaintext) {
-        if (plaintext.length() < 20) {
-            throw new IllegalArgumentException("plaintext length should be bigger or equal 20. got: " + plaintext.length());
-        }
-
         BigInteger message = new BigInteger(plaintext.getBytes());
         BigInteger ciphertext = encrypt(message);
         return String.valueOf(ciphertext);
@@ -37,10 +33,6 @@ public class RSA {
     }
 
     public String getPlaintext(String ciphertext) {
-        if (ciphertext.length() == 0) {
-            throw new IllegalArgumentException("could not work with empty ciphertext");
-        }
-
         BigInteger message = new BigInteger(ciphertext);
         BigInteger decryptedMessage = decrypt(message);
 
