@@ -61,7 +61,7 @@ public class RSAGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String ciphertext = inputField.getText();
                 String decryptedText = rsa.getPlaintext(ciphertext);
-                outputField.setText(decryptedText);
+                outputField.setText(String.valueOf(decryptedText));
             }
         });
         bottomPanel.add(decryptButton);
@@ -132,7 +132,7 @@ public class RSAGUI extends JFrame {
         pField.setText(rsa.p.toString());
         qField.setText(rsa.q.toString());
         nField.setText(rsa.n.toString());
-        phiNField.setText(rsa.lambda.toString());
+        phiNField.setText(rsa.phi.toString());
         eField.setText(rsa.e.toString());
         dField.setText(rsa.d.toString());
     }

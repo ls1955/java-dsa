@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class RSA {
-    public BigInteger p, q, n, lambda, e, d;
+    public BigInteger p, q, n, phi, e, d;
     private int bitLength = 1024;
     private SecureRandom r;
 
@@ -13,35 +13,25 @@ public class RSA {
         p = new BigInteger(bitLength / 2, 100, new SecureRandom());
         q = new BigInteger(bitLength / 2, 100, new SecureRandom());
         n = p.multiply(q);
-        lambda = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
+        phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
         e = BigInteger.valueOf(65537);
-        while (lambda.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(lambda) < 0) {
+        while (phi.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(phi) < 0) {
             e.add(BigInteger.ONE);
         }
-        d = e.modInverse(lambda);
+        d = e.modInverse(phi);
     }
 
     public String getCiphertext(String plaintext) {
         BigInteger message = new BigInteger(plaintext.getBytes());
-        BigInteger ciphertext = encrypt(message);
+        BigInteger ciphertext = message.modPow(e, n);
         return String.valueOf(ciphertext);
-    }
-
-    // Returns an encrypted number from *message*.
-    public BigInteger encrypt(BigInteger message) {
-        return message.modPow(e, n);
     }
 
     public String getPlaintext(String ciphertext) {
         BigInteger message = new BigInteger(ciphertext);
-        BigInteger decryptedMessage = decrypt(message);
+        BigInteger decryptedMessage = message.modPow(d, n);
 
         return new String(decryptedMessage.toByteArray());
-    }
-
-    // Returns a decrypted number from *message*.
-    public BigInteger decrypt(BigInteger message) {
-        return message.modPow(d, n);
     }
 
     public static void main(String[] args) {
