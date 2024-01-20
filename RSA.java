@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class RSA {
-    private BigInteger p, q, n, lambda, e, d;
+    public BigInteger p, q, n, lambda, e, d;
     private int bitLength = 1024;
     private SecureRandom r;
 
