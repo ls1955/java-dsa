@@ -1,5 +1,5 @@
-# DSA
-DSA algorithm written in Java.
+# RSA
+RSA algorithm written in Java.
 
 # Getting Started
 ```shell
