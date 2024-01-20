@@ -46,8 +46,9 @@ public class RSAGUI extends JFrame {
                 String[] words = plaintext.split("\\s+");
                 if (words.length < 20) {
                     // Display a dialog if the condition is not met
-                    JOptionPane.showMessageDialog(RSAGUI.this, "Plaintext length should be greater or equal to 20. Got: " + words.length,
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(RSAGUI.this, "Plaintext length should be greater or equal to 20. Got: " + words.length, "Error", JOptionPane.ERROR_MESSAGE);
+                } else if(plaintext.length() > 125){
+                    JOptionPane.showMessageDialog(RSAGUI.this, "Plaintext's character length should not be greater than 125. Got: " + plaintext.length(), "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     String ciphertext = rsa.getCiphertext(plaintext);
                     outputField.setText("Encrypted message: " + ciphertext);
